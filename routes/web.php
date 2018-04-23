@@ -14,3 +14,15 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->get('/key', function() use ($router) {
+    return str_random(32);
+});
+
+$router->post('/login', 'LoginController@login');
+$router->post('/register', 'UserController@register');
+$router->get('/user', ['middleware' => 'auth', 'uses' =>  'UserController@get_user']);
+$router->get('/users', 'UserController@get_user');
+$router->post('/users/search', 'UserController@search');
+$router->post('/user/{id}', 'UserController@updatePassword');
+$router->delete('/user/{email}', 'UserController@destroy');
